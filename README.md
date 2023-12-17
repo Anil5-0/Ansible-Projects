@@ -1,8 +1,14 @@
 # Ansible
 
-Configuration Management tool & IaC tool.
+Configuration Management tool - To automate configuring servers, installing tools, deploy apps, etc.
 
-automate configuring servers, installing tools, deploy apps, etc.
+## Content
+
+This contains sections about:
+
+-   Intro to Ansible
+-   Project 1 Deploy Node.js App 
+
 
 ## Intro to Ansible 
 
@@ -41,10 +47,3 @@ automate configuring servers, installing tools, deploy apps, etc.
 
 ## Project 1 Deploy Node.js App
 
-- Create EC2 instance (linux ami) -> this is our control node 
-
-```bash
-    sudo yum install python
-    curl -O https://bootstrap.pypa.io/get-pip.py
-    python3 get-pip.py --user
-```
