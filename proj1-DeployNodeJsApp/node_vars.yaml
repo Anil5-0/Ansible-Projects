@@ -1,0 +1,2 @@
+linux_name: node-app
+home_dir: /home/{{linux_name}}

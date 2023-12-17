@@ -1,17 +1,63 @@
 ---
-name: Install Node & npm
-hosts: 
-become: true
-become_user: root
-tasks:
-  - name: update system packages
-    ansible.builtin.yum:
-      name: '*'
-      state: latest
-  - name: install node & npm
-    ansible.builtin.yum:
-      name: "{{ packages }}"
-    vars:
-      packages:
-      - npm
-      - nodejs    
+- name: Create new linux user for node app
+  hosts: targets
+  become: true
+  become_user: root
+  vars_files:
+    - node_vars.yaml
+  tasks:
+  - name: create linux user
+    user: 
+      name: {{linux_name}}
+
+
+- name: Install node & npm
+  hosts: targets
+  become: true
+  become_user: root
+  tasks:
+    - name: update system packages
+      ansible.builtin.yum:
+        name: '*'
+        state: latest
+
+    - name: install node & npm
+      ansible.builtin.yum:
+        name: "{{ packages }}"
+      vars:
+        packages:
+        - npm
+        - nodejs 
+
+
+- name: Copy and run app.js 
+  hosts: targets
+  become: true
+  become_user: node-app
+  vars_files:
+    - node_vars.yaml
+  tasks:
+  - name: Ensure that directory exists
+    file:
+      path: "{{home_dir}}/my-node-app/src"
+      state: directory
+      owner: node-app
+      mode: '0755'
+
+  - name: Copy app files to the server
+    copy:
+      src: ~/Ansible-Projects/proj1-DeployNodeJsApp/app.js
+      dest: "{{home_dir}}/my-node-app/src/app.js"
+
+  - name: Start app
+    command: 
+      chdir: "{{home_dir}}/my-node-app/src"
+      cmd: node app.js
+    async: 600
+    poll: 0
+
+  - name: Ensure app is running
+    shell: ps aux | grep node
+    register: app_status
+
+  - debug: msg={{ app_status.stdout_lines }}
