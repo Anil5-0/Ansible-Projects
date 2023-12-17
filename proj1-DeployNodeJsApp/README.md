@@ -72,5 +72,20 @@ scp -i '<path_to_pem_file_for_control_node>'/Path/to/pem_file/for/node_servers e
 
 ## Demo
 
+- Create Control Node and Servers on AWS EC2.
+
+    ![](/docs/images/proj1/01-servers.PNG)
+
+- SSH into control node, clone the git repo and run ansible playbook.
+
+    ![](/docs/images/proj1/02-clone-repo-to-control-node.PNG)
+
+    ![](/docs/images/proj1/03-playbook-op1.PNG)
+
+    ![](/docs/images/proj1/04-playbook-op-2.PNG)
+
+- send http request to the remote server at port 3000 and check if app is accessible.
+
+    ![](/docs/images/proj1/05-browser-op.PNG)
 
 

@@ -14,11 +14,10 @@ This contains sections about:
 
 - tool to automate any IT task. (eg: updating docker version on set of nodes, etc)
 - manual approach: to ssh into each node and do task.
-- configuration, deployment or installation steps in a single reusable file
 - need ssh access to target servers from control machine.
-- agentless
+- Ansible is agentless
 - modules: small programs that does actual work. moved to remote server -> executed and removed.
-- Play: tasks, with which user and on which hosts
+- Play: contains tasks, with which user and on which hosts
 - Playbook: one or more plays in a YAML. orchestrates module execution.
 - hosts are defined in inventory yaml -> can group multiple hosts together and execute tasks on them.
 - Ansible Tower: UI Dashboard -> centrally store automation tasks
@@ -46,4 +45,6 @@ This contains sections about:
 
 
 ## Project 1 Deploy Node.js App
+
+- [Click Here](/proj1-DeployNodeJsApp/README.md)
 
