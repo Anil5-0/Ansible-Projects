@@ -1,0 +1,17 @@
+---
+name: Install Node & npm
+hosts: 
+become: true
+become_user: root
+tasks:
+  - name: update system packages
+    ansible.builtin.yum:
+      name: '*'
+      state: latest
+  - name: install node & npm
+    ansible.builtin.yum:
+      name: "{{ packages }}"
+    vars:
+      packages:
+      - npm
+      - nodejs    
