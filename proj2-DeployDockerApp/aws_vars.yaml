@@ -1,0 +1,4 @@
+linux_user: anil
+user_group: adm,docker
+home_dir: "/home/{{linux_user}}"
+docker_password: # Enter output of aws ecr get-login-password --region <region> from cloudshell

@@ -64,11 +64,13 @@ scp -i '<path_to_pem_file_for_control_node>'/Path/to/pem_file/for/node_servers e
 
 - command module is more secure than shell module. Use shell module for pipe(|), boolean (&&,||), env_vars, $HOME, etc. These modules are not idempotent so may need to use conditionals.
 
-- Can also pass variables to ansible-playbook cmd or by defining `vars` inside a play. Can't use hyphen in variable name, only underscore.
+- Can also pass variables to ansible-playbook cmd or by defining `vars` for that play. Can't use hyphen in variable name, only underscore.
 
 ```bash
     ansible-playbook -i hosts playbook.yaml -e "linux_name=node-app home_dir=/home/{{linux_name}}"
 ```
+
+- more convenient way is to use `vars_files` in play, which refers to a file which has all vars defined.
 
 ## Demo
 

@@ -1,0 +1,52 @@
+---
+- name: Create a new linux user, Install Docker and Docker Compose
+  hosts: docker_servers
+  become: yes
+  tasks:
+    - name: new linux user
+      user:
+        name: "{{linux_user}}"
+        groups: "{{user_group}}"
+        
+    - name: install docker
+      yum: 
+        name: docker
+        update_cache: yes
+        state: present
+      
+    - name: install docker compose
+      get_url: 
+        url: https://github.com/docker/compose/releases/download/v2.23.3/docker-compose-linux-{{lookup('pipe', 'uname -m')}}
+        dest: /usr/local/bin/docker-compose
+        mode: +x
+
+
+- name: Ensure Docker is running
+  hosts: docker_servers
+  become: yes
+  tasks:
+    - name: start docker daemon
+      systemd:
+        name: docker
+        state: started
+
+
+- name: Start Docker container
+  hosts: docker_servers
+  become: "{{linux_user}}"
+  tasks:
+    - name: Copy docker compose file
+      copy:
+        src: /home/ec2-user/Ansible-Projects/proj2-DeployDockerApp/docker-compose.yaml
+        dest: "{{home_dir}}/docker-compose.yaml"
+
+    - name: Docker login to ECR
+      docker_login:
+        registry_url: 482114220585.dkr.ecr.ap-southeast-1.amazonaws.com
+        username: AWS
+        password: "{{docker_password}}"
+
+    - name: Start containers using compose
+      docker_compose: 
+        project_src: "{{home_dir}}"
+        state: present
