@@ -2,7 +2,7 @@ version: '3'
 
 services:
   app:
-    image: 482114220585.dkr.ecr.ap-southeast-1.amazonaws.com/python-hello-world:0.2.4
+    image: 482114220585.dkr.ecr.ap-southeast-1.amazonaws.com/python-hello-world:0.1.1
     ports:
       - "80:80"
     

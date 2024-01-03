@@ -1,24 +1,34 @@
 ---
-- name: Create a new linux user, Install Docker and Docker Compose
+- name: Create a new linux user, Install Docker, Docker Compose and their python modules
   hosts: docker_servers
   become: yes
-  tasks:
-    - name: new linux user
-      user:
-        name: "{{linux_user}}"
-        groups: "{{user_group}}"
-        
+  vars_files:
+  - aws_vars.yaml
+  tasks:    
     - name: install docker
-      yum: 
-        name: docker
+      ansible.builtin.yum: 
+        name: 
+          - docker
+          - pip
         update_cache: yes
         state: present
       
     - name: install docker compose
-      get_url: 
+      ansible.builtin.get_url: 
         url: https://github.com/docker/compose/releases/download/v2.23.3/docker-compose-linux-{{lookup('pipe', 'uname -m')}}
         dest: /usr/local/bin/docker-compose
         mode: +x
+
+    - name: python modules for docker and docker-compose
+      ansible.builtin.pip: 
+       name: 
+        - docker==6.1.3
+        - docker-compose
+
+    - name: new linux user
+      ansible.builtin.user:
+        name: "{{linux_user}}"
+        groups: "{{user_group}}"
 
 
 - name: Ensure Docker is running
@@ -33,7 +43,10 @@
 
 - name: Start Docker container
   hosts: docker_servers
-  become: "{{linux_user}}"
+  vars_files:
+  - aws_vars.yaml
+  become: yes
+  become_user: "{{linux_user}}"
   tasks:
     - name: Copy docker compose file
       copy:

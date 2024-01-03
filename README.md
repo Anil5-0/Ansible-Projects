@@ -8,6 +8,7 @@ This contains sections about:
 
 -   Intro to Ansible
 -   Project 1 Deploy Node.js App 
+-   Project 2 Deploy Docker App 
 -   Usage of Modules
 
 
@@ -50,6 +51,10 @@ This contains sections about:
 
 - [Click Here](/proj1-DeployNodeJsApp/README.md)
 
+
+## Project 2 Deploy Docker App 
+
+- [Click Here](/proj2-DeployDockerApp/README.md)
 
 ## Usage of Modules
 
