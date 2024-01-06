@@ -73,9 +73,10 @@ This contains sections about:
 ```bash
     tasks:
     - name: Untar nexus installer
-      src: /opt/nexus-3.63.0-01-unix.tar.gz
-      dest: /opt/
-      remote_src: yes
+      unarchive:
+        src: /opt/nexus-3.63.0-01-unix.tar.gz
+        dest: /opt/
+        remote_src: yes
 ```
 
 - to return a list of files based on pattern we can use `find` module. For windows it's `win_find` module.
@@ -102,6 +103,14 @@ This contains sections about:
     - name: rename nexus folder
       shell: mv {{find_result.files[0].path}} /opt/nexus
       when: not stat_res.stat.exists
+```
+
+- to reconnect to a server, we use `meta` module.
+
+```bash
+    tasks:
+    - name: Reconnect to server session
+      meta: reset_connection
 ```
 
 

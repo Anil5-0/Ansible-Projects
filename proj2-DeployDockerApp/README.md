@@ -60,6 +60,27 @@ scp -i '<path_to_pem_file_for_control_node>'/Path/to/pem_file/for/node_servers e
     ansible-playbook playbook.yaml
 ```
 
+- uname: command line utility that print basic info about os name & system hardware.
+```bash
+    uname -s # Linux
+    uname -m # x86_64
+```
+- pipe lookup plugin: Allow ansible to fetch data from outside sources. Calculates output of shell command & pipes it to left side of lookup. Lookup is part of jinja2 template that Ansible uses.
+
+- systemd module: control systemd services on remote host
+
+- Need to add current user to docker grp, in order for this user to run docker cmds.
+
+- cmd & shell modules doesn't offer state management or idempotency. So we'll use Docker community collection.
+
+- Fully Qualified Collection Names :
+```bash
+    <namespace>.<collection>.<module> 
+    <namespace>.<collection>.<plugin> # community.docker.docker_image
+```
+- `vars_prompt` is another way to pass variables to playbook. It gives a prompt at runtime, so we can enter the login-password for ecr. It's defined at level similar to `vars` at a play.
+
+
 ## Demo
 
 - SSH into control node, clone the git repo and run ansible playbook.
